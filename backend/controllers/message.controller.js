@@ -36,7 +36,7 @@ export const sendMessage = async (req, res) => {
 
         await Promise.all([conversation.save(), newMessage.save()]);
 
-        res.status(201).json({ message: "Message sent successfully", newMessage });
+        res.status(201).json(newMessage);
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -53,7 +53,7 @@ export const getMessage = async (req, res) => {
         }).populate("messages"); // populates the messages array with the actual message objects
 
         if (!conversation) {
-            return res.status(404).json({ message: "Conversation not found" });
+            return res.status(200).json([]);
         }
 
         const messages = conversation.messages;
